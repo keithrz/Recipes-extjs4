@@ -1,9 +1,3 @@
 $(document).ready(function(){
-	$("a").click(function(event){
-		console.log(event);
-		console.log(this);
-		console.log($(this));
-		console.log($(this).length);
-		event.preventDefault();
-	});	
+	$("#recipe-tabs").tabs();
 });

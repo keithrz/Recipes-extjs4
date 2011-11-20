@@ -8,9 +8,6 @@
     <th></th>
     <th></th>
   </tr>
-  <tr>
-	<td colspan="2"><a href="http://localhost:3000/">Click Here</a></td>
-  </tr>
 
 <% @recipes.each do |recipe| %>
   <tr>
@@ -25,4 +22,11 @@
 
 <br />
 
-<%= link_to 'New Recipe', new_recipe_path %>
+<div id="recipe-tabs">
+	<ul>
+    	<li><a href="#recipe-search"><span>One</span></a></li>
+    	<li><a href="#recipe-new"><span>Two</span></a></li>
+	</ul>
+    <div id="recipe-search">First content</div>
+    <div id="recipe-new">Second content</div>
+</div>
