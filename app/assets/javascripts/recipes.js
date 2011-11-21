@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$("#recipe-tabs").tabs();
 	
-	var myGrid = $("#recipe-grid").jqGrid({ 
+	$("#recipe-grid").jqGrid({ 
 	    url:'recipes.json',
 		datatype: 'json',
 		colNames:['Title','Content'],
@@ -17,6 +17,4 @@ $(document).ready(function(){
     viewrecords: true,
     caption: 'Recipe List'
   });
-
-	myGrid.load();
 });

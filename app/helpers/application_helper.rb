@@ -1,9 +1,9 @@
 module ApplicationHelper
   
-  include ActionView::Helpers::JavaScriptHelper
-  
   # from https://github.com/ahe/2dc_jqgrid
   #        --> lib / 2dc_jqgrid.rb
+  
+  include ActionView::Helpers::JavaScriptHelper
   
   def to_jqgrid_json(data, attributes, current_page, per_page, total)
     json = %Q({"page":"#{current_page}","total":#{total/per_page.to_i+1},"records":"#{total}")
