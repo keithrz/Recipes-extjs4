@@ -2,7 +2,14 @@ $(document).ready(function(){
 	$("#recipe-grid").jqGrid({ 
 	    url:'recipes.json',
 		datatype: 'json',
-		colNames:['Actions','Title','Content'],
+		jsonReader: {
+			repeatitems: false
+		},
+		colNames:[
+			'Actions',
+			'Title',
+			'Content'
+		], 
 		colModel :[ 
 		    {name:'actions', width:60, fixed:true, sortable:false, resize:false, formatter: 'actions'},
 			{name:'title', index:'title',editable:true}, 
@@ -14,7 +21,15 @@ $(document).ready(function(){
     sortname: 'title',
     sortorder: 'asc',
     viewrecords: true,
-    caption: 'Recipe List',
-	editurl: 'recipes/1/edit'
+    caption: 'Recipe List'
+//	editurl: ''
+//	edittype: 'put'
+//	prevId: 1,
+//	onSelectRow: function(id) {
+//		if(id && id != this.prevId) {
+//			$(this).editurl = '/recipes/' + id + '.json';
+//			this.prevId=id;
+//		}
+//	}
   });
 });

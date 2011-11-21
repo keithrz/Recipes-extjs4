@@ -7,7 +7,8 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => to_jqgrid_json(@recipes, [:title,:content], 
+#      format.json { render :json => @recipes }
+      format.json { render :json => to_jqgrid_json(@recipes, ["id","title","content"], 
                                                              1, 10, @recipes.length)}
     end
   end
