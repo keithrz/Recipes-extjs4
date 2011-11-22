@@ -1,38 +1,6 @@
-** EDIT BUTTON **
-
-bad jqGrid PUT (request params, client-side perspective)
-	.	title:second22
-	.	content:no content yet
-	.	oper:edit
-	.	id:2
-
-bad jqGrid PUT (server log)
-Started PUT "/recipes/3.json" for 127.0.0.1 at Sun Nov 20 23:40:27 -0600 2011
-  Processing by RecipesController#update as JSON
-  Parameters: {"title"=>"not a number123", "id"=>"3", "oper"=>"edit", "content"=>"123the content"}
-  Recipe Load (0.2ms)  SELECT "recipes".* FROM "recipes" WHERE "recipes"."id" = ? LIMIT 1  [["id", "3"]]
-Completed 200 OK in 11ms
-
-good rails PUT (request params, client-side perspective)
-	.	utf8:✓
-	.	_method:put
-	.	authenticity_token:vY7P1CeBIcZzHZV/y807p Slx6gG2KPZVExibtCVsBg=
-	.	recipe[title]:not a number
-	.	recipe[content]:123the content
-	.	commit:Update Recipe
-
-good rails PUT (server log)
-Started PUT "/recipes/3" for 127.0.0.1 at Sun Nov 20 23:33:14 -0600 2011
-  Processing by RecipesController#update as HTML
-  Parameters: {"commit"=>"Update Recipe", "authenticity_token"=>"vY7P1CeBIcZzHZV/y807p+Slx6gG2KPZVExibtCVsBg=", "utf8"=>"\342\234\223", "id"=>"3", "recipe"=>{"title"=>"not a number", "content"=>"the content"}}
-  Recipe Load (0.6ms)  SELECT "recipes".* FROM "recipes" WHERE "recipes"."id" = ? LIMIT 1  [["id", "3"]]
-   (0.9ms)  UPDATE "recipes" SET "title" = 'not a number', "updated_at" = '2011-11-21 05:33:14.213279' WHERE "recipes"."id" = 3
-Redirected to http://localhost:3000/recipes/3
-Completed 302 Found in 20ms
-
 ** NEXT TODO ITEMS **
-Delete button logic
 Add button UI and logic
+Clean up scaffolding code for recipes.js
 Text Area for Content
 Category metadata
 Upload File for Content
