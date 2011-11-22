@@ -7,7 +7,6 @@ class RecipesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-#      format.json { render :json => @recipes }
       format.json { render :json => to_paging_object(@recipes, 1, 10)}
     end
   end
