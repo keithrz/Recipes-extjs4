@@ -88,4 +88,28 @@ $(document).ready(function(){
 		},
     	viewrecords: true
   	});
+
+	//TODO clean-up
+	$("#add-btn").click(function() { 
+		$("#recipe-grid").editGridRow("new", { 
+			mtype:'POST',
+			closeAfterAdd:true,
+			url: 'recipes.json',
+			serializeEditData: function(postData){
+				var rootData = {};
+				var recipeData = {};
+				for(var key in postData) {
+					// id should always be at root of the row Obj
+					// oper is a jqGrid property (
+					if(key == "id" || key == "oper") {
+						rootData[key] = postData[key];
+					} else {
+						recipeData[key] = postData[key];
+					}
+				}
+				rootData['recipe'] = recipeData;
+				return rootData;
+			}
+	 	});
+	});
 });
