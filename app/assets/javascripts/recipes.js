@@ -1,15 +1,10 @@
 $(document).ready(function(){
 	$("#recipe-grid").jqGrid({ 
+		// specific to recipes
 	    url:'recipes.json',
-		datatype: 'json',
-		editmtype: 'PUT',
-		jsonReader: {
-			repeatitems: false
-		},
-		ajaxRowOptions: { 
-//contentType: 'application/json; charset=utf-8',
-			type: "PUT" 
-		},
+		
+		//TODO move 'recipe' string to recipe-specific code
+		//     move rest of serializeRowData to boilerplate
 		serializeRowData: function(postData){
 			var rootData = {};
 			var recipeData = {};
@@ -40,13 +35,37 @@ $(document).ready(function(){
     	rowList: [10,25,50,100],
     	sortname: 'title',
     	sortorder: 'asc',
-    	viewrecords: true,
     	caption: 'Recipe List',
+		// TODO move 'recipes' string to recipe-specific code
+		//      move rest of onSelectRow to boilerplate section
 		onSelectRow: function(id) {
 			if(id && id != this.prevId) {
 				$(this).jqGrid('setGridParam', {editurl:'/recipes/' + id + '.json'});
 				this.prevId=id;
 			}
-		}
+		},
+
+		//boilerplate for RoR, ajax
+		//TODO if creating 2nd grid, move this to a common Obj
+		datatype: 'json',
+		jsonReader: {
+			repeatitems: false
+		},
+		ajaxRowOptions: { 
+			//contentType: 'application/json; charset=utf-8',
+
+			// For successful PUTs, RoR returns a single whitespace
+			// jQuery.ajaxConvert() does not like parsing the whitespace
+			// this is a workaround
+			dataFilter: function(responseData, dataType){
+				if(responseData.trim() == "") {
+					return "";
+				} else {
+					return responseData;
+				}
+			},
+			type: "PUT" 
+		},
+    	viewrecords: true
   	});
 });
