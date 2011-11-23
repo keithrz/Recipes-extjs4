@@ -1,29 +1,28 @@
 module ApplicationHelper
   
-  def to_paging_object(data, current_page, per_page)
-    total = data.length;
-
+  def to_paging_object(data, current_page, per_page, total)
     return {"page" => current_page,
             "total" => ((total/per_page).to_i+1),
             "records" => total,
             "rows" => data};
   end
   
-  def get_ordered(ar, params)
-    @sort_order = get_sort_order(params);
+  def get_sorted_page(ar, params, current_page, per_page)
+    @sort_order = get_sort_order(params)
+    @offset = (current_page -1) * per_page
     if @sort_order.nil? then
-      return ar.all
+      return ar.limit(@per_page).offset(@offset)
     else
-      return ar.order(@sort_order);
+      return ar.order(@sort_order).limit(@per_page).offset(@offset)
     end
   end
   
   def get_current_page(params)
-    return params[:page].nil? ? 1 : params[:page]
+    return params[:page].nil? ? 1 : params[:page].to_i
   end
   
   def get_per_page(params)
-    return params[:rows].nil? ? 10 : params[:rows]
+    return params[:rows].nil? ? 10 : params[:rows].to_i
   end
   
   private
