@@ -2,12 +2,13 @@ class RecipesController < ApplicationController
   # GET /recipes
   # GET /recipes.json
   def index
-    @recipes = Recipe.all
-    #@recipesData = { "data" => @recipes}
+    @recipes = get_ordered(Recipe, params)
+    @current_page = get_current_page(params)
+    @per_page = get_per_page(params)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => to_paging_object(@recipes, 1, 10)}
+      format.json { render :json => to_paging_object(@recipes, @current_page.to_i, @per_page.to_i)}
     end
   end
 
