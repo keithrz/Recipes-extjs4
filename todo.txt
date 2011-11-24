@@ -1,7 +1,6 @@
 ** NEXT TODO ITEMS **
-Add button UI and logic
+Filtering
 Clean up scaffolding code for recipes.js
-Text Area for Content
 Category metadata
 Upload File for Content
 Extract Ingredients from Content
