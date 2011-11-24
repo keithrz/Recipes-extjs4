@@ -8,12 +8,12 @@ module ApplicationHelper
   end
   
   def get_sorted_page(ar, params, current_page, per_page)
-    @sort_order = get_sort_order(params)
-    @offset = (current_page -1) * per_page
-    if @sort_order.nil? then
-      return ar.limit(@per_page).offset(@offset)
+    sort_order = get_sort_order(params)
+    offset = (current_page -1) * per_page
+    if sort_order.nil? then
+      return ar.limit(per_page).offset(offset)
     else
-      return ar.order(@sort_order).limit(@per_page).offset(@offset)
+      return ar.order(sort_order).limit(per_page).offset(offset)
     end
   end
   
@@ -30,10 +30,10 @@ module ApplicationHelper
     if params[:sidx].nil? then
       return nil;
     end
-    @sort_ascdesc = "ASC"
+    sort_ascdesc = "ASC"
     if params[:sord].downcase == "desc" then
-      @sort_ascdesc = "DESC"
+      sort_ascdesc = "DESC"
     end
-    return params[:sidx] + " " + @sort_ascdesc
+    return params[:sidx] + " " + sort_ascdesc
   end
 end
