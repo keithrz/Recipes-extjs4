@@ -20,23 +20,7 @@ $(document).ready(function(){
     	sortname: 'title',
     	sortorder: 'asc',
     	caption: 'Recipe List',
-		//TODO move 'recipe' string to recipe-specific code
-		//     move rest of serializeRowData to boilerplate
-		serializeRowData: function(postData){
-			var rootData = {};
-			var recipeData = {};
-			for(var key in postData) {
-				// id should always be at root of the row Obj
-				// oper is a jqGrid property (
-				if(key == "id" || key == "oper") {
-					rootData[key] = postData[key];
-				} else {
-					recipeData[key] = postData[key];
-				}
-			}
-			rootData['recipe'] = recipeData;
-			return rootData;
-		},
+		serializeRowData: GridHelper.serializeData('recipe'),
 
 		// TODO move 'recipes' string to recipe-specific code
 		//      move rest of onSelectRow to boilerplate section
@@ -48,7 +32,7 @@ $(document).ready(function(){
 		},
 
 		//
-		//boilerplate for RoR, ajax
+		//boilerplate for Rails, ajax
 		//
 		//TODO if creating 2nd grid, move all boilerplate to a common Obj
 		datatype: 'json',
@@ -60,56 +44,24 @@ $(document).ready(function(){
 			mtype: 'DELETE',
 			ajaxDelOptions: {
 				//contentType: 'application/json; charset=utf-8',
-
-				// For successful PUTs and DELETEs, RoR returns a single whitespace
-				// jQuery.ajaxConvert() does not like parsing the whitespace
-				// this is a workaround
-				dataFilter: function(responseData, dataType) {
-					if(responseData.trim() == "") {
-						return "";
-					} else {
-						return responseData;
-					}
-				}
+				dataFilter: GridHelper.trimEmptyResponse
 			}				
 		},
-		//editOptions: {mtype: 'PUT'},
-		
+
 		ajaxRowOptions: { 
 			//contentType: 'application/json; charset=utf-8',
 			type: "PUT",
-			dataFilter: function(responseData, dataType) {
-				if(responseData.trim() == "") {
-					return "";
-				} else {
-					return responseData;
-				}
-			}
+			dataFilter: GridHelper.trimEmptyResponse
 		},
     	viewrecords: true
   	});
 
-	//TODO clean-up
 	$("#add-btn").click(function() { 
 		$("#recipe-grid").editGridRow("new", { 
 			mtype:'POST',
 			closeAfterAdd:true,
 			url: 'recipes.json',
-			serializeEditData: function(postData){
-				var rootData = {};
-				var recipeData = {};
-				for(var key in postData) {
-					// id should always be at root of the row Obj
-					// oper is a jqGrid property (
-					if(key == "id" || key == "oper") {
-						rootData[key] = postData[key];
-					} else {
-						recipeData[key] = postData[key];
-					}
-				}
-				rootData['recipe'] = recipeData;
-				return rootData;
-			}
+			serializeEditData: GridHelper.serializeData('recipe')
 	 	});
 	});
 });
