@@ -1,8 +1,5 @@
 $(document).ready(function(){
-	$("#recipe-grid").jqGrid({ 
-		//
-		// specific to recipes
-	    //
+	$("#recipe-grid").jqGrid($.extend({ 
 		url:'recipes.json',
 		colNames:[
 			'Actions',
@@ -29,32 +26,8 @@ $(document).ready(function(){
 				$(this).jqGrid('setGridParam', {editurl:'/recipes/' + id + '.json'});
 				this.prevId=id;
 			}
-		},
-
-		//
-		//boilerplate for Rails, ajax
-		//
-		//TODO if creating 2nd grid, move all boilerplate to a common Obj
-		datatype: 'json',
-		jsonReader: {
-			repeatitems: false
-		},
-		
-		delOptions: {
-			mtype: 'DELETE',
-			ajaxDelOptions: {
-				//contentType: 'application/json; charset=utf-8',
-				dataFilter: GridHelper.trimEmptyResponse
-			}				
-		},
-
-		ajaxRowOptions: { 
-			//contentType: 'application/json; charset=utf-8',
-			type: "PUT",
-			dataFilter: GridHelper.trimEmptyResponse
-		},
-    	viewrecords: true
-  	});
+		}
+  	}, GridOptions));
 
 	$("#add-btn").click(function() { 
 		$("#recipe-grid").editGridRow("new", { 
