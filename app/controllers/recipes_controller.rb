@@ -43,15 +43,13 @@ class RecipesController < ApplicationController
   # POST /recipes.json
   def create
     @recipe = Recipe.new(params[:recipe])
-
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, :notice => 'Recipe was successfully created.' }
-        format.json { render :json => @recipe, :status => :created, :location => @recipe }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @recipe.errors, :status => :unprocessable_entity }
-      end
+    
+    # async (resque) job - email 'new recipe' notification
+    if @recipe.save
+      Resque.enqueue(RecipeNotifier, @recipe.id)
+      render :json => @recipe, :status => :created, :location => @recipe 
+    else
+      render :json => @recipe.errors, :status => :unprocessable_entity
     end
   end
 

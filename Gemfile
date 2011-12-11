@@ -34,3 +34,5 @@ gem 'jquery-rails', '1.0.18'
 # To use debugger
 # gem 'ruby-debug'
 
+gem 'resque', :require => "resque/server"
+
